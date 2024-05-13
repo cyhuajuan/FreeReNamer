@@ -1,0 +1,78 @@
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import type { FC } from 'react';
+import { useFormContext } from 'react-hook-form';
+
+export const RuleDeleteForm: FC = () => {
+  const form = useFormContext();
+
+  return (
+    <div>
+      <FormField
+        control={form.control}
+        name="info.match"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>查找</FormLabel>
+            <FormControl>
+              <Input {...field} autoComplete="off" />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      <div>
+        <FormField
+          control={form.control}
+          name="info.useRegExp"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel>使用正则表达式</FormLabel>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="info.caseSensitive"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel>区分大小写</FormLabel>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="info.matchAll"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel>匹配所有符合项</FormLabel>
+            </FormItem>
+          )}
+        />
+      </div>
+    </div>
+  );
+};
