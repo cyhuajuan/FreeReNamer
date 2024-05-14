@@ -52,9 +52,18 @@ export async function addProfile(info: Omit<Profile, 'id'>): Promise<string> {
 
 export async function updateProfile(
   id: string,
-  info: Omit<Profile, 'id'>,
+  info: Partial<Omit<Profile, 'id'>>,
 ): Promise<void> {
   const sk = getProfileStoreKey(id);
+  const profile = await store.get<Profile>(sk);
 
-  await store.set(sk, { ...info, id });
+  await store.set(sk, { ...profile, ...info });
+}
+
+export async function delProfile(id: string): Promise<void> {
+  const sk = getProfileStoreKey(id);
+  const profileIds = await getProfileIds();
+
+  await setProfileIds(profileIds.filter((profileId) => profileId !== id));
+  await store.delete(sk);
 }

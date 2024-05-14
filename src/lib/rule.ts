@@ -92,7 +92,7 @@ export function getRuleTypeDefaultInfo<T extends RuleType>(
       return {
         script:
           'const { fileInfo, index } = args;\n\n// some code \n\nreturn fileInfo.name;\n',
-        includeExt: false,
+        includeExt: true,
       } satisfies RuleScriptInfo as RuleInfo[T];
   }
 

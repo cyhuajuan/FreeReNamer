@@ -13,6 +13,8 @@ import { execRules } from '@/lib/rule';
 import { dirname, join } from '@tauri-apps/api/path';
 import { invoke } from '@tauri-apps/api';
 import { getFileInfo } from '@/lib/file';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { showConfirm } from '@/lib/ui';
 
 export const Route = createFileRoute('/profile')({
   component: Component,
@@ -21,7 +23,7 @@ export const Route = createFileRoute('/profile')({
 function Component() {
   const queryClient = useQueryClient();
   const params = useParams({ from: '/profile/$profileId' });
-  const [sidePanelOpened, setSidePanelOpened] = useState(true);
+  const [sidePanelOpened, setSidePanelOpened] = useState(false);
 
   const navStyle = useSpring({
     width: sidePanelOpened ? 240 : 0,
@@ -73,7 +75,13 @@ function Component() {
   });
 
   function handleExecClick() {
-    params.profileId && execProfile(params.profileId);
+    showConfirm({
+      title: '确定执行？',
+      description: '执行后原文件名无法恢复',
+      onOk: () => {
+        params.profileId && execProfile(params.profileId);
+      },
+    });
   }
 
   return (
@@ -83,7 +91,9 @@ function Component() {
         className="h-full overflow-hidden border-r"
       >
         <div className="h-[calc(100%-3.5rem)] w-full">
-          <ProfileNavList />
+          <ScrollArea className="size-full">
+            <ProfileNavList />
+          </ScrollArea>
         </div>
         <div className="flex h-14 w-full items-center justify-center border-t px-2">
           <Button
@@ -92,7 +102,7 @@ function Component() {
             size="sm"
             onClick={() => {
               execAddProfile({
-                name: nanoid(4),
+                name: '新配置',
                 rules: [],
               });
             }}

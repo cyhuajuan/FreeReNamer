@@ -16,7 +16,7 @@ export const RuleAddPanel: FC = () => {
 
   return (
     <div className="flex size-full h-full gap-x-4">
-      <div className="flex w-32 shrink-0 flex-col gap-y-1">
+      <div className="flex w-28 shrink-0 flex-col gap-y-1">
         {RULE_TYPES.map((ruleType) => (
           <div
             key={ruleType}
@@ -28,7 +28,7 @@ export const RuleAddPanel: FC = () => {
           </div>
         ))}
       </div>
-      <div className="h-full flex-1 grid grid-rows-[max-content_1fr] gap-y-4">
+      <div className="grid h-full flex-1 grid-rows-[max-content_1fr] gap-y-4">
         <fieldset className="size-full rounded border">
           <legend className="ml-3 px-1 font-bold text-sm">规则名称</legend>
           <div className="p-4 pt-2">

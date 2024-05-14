@@ -14,7 +14,7 @@ self.MonacoEnvironment = {
 
 monaco.languages.typescript.javascriptDefaults.addExtraLib(
   `
-var args: { fileInfo: { name: string; ext: string }, index: number };
+var args: { fileInfo: { name: string; ext: string; fullName: string; }, index: number };
 `,
 );
 monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);

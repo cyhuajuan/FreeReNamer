@@ -9,7 +9,13 @@ export const ProfileNavList: FC = () => {
   return (
     <div className="flex w-full flex-col gap-y-2 p-2">
       {profileIds.map((profileId) => {
-        return <ProfileNav key={profileId} id={profileId} />;
+        return (
+          <ProfileNav
+            key={profileId}
+            id={profileId}
+            disableDel={profileIds.length === 1}
+          />
+        );
       })}
     </div>
   );
