@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+import { escapeRegExp } from 'lodash-es';
 import { getFileInfo, type FileInfo } from './file';
 
 export enum RuleType {
@@ -116,17 +117,13 @@ export async function _execRule(
         rule.info;
       const fileName = includeExt ? fileInfo.fullName : fileInfo.name;
 
-      if (useRegExp) {
-        return fileName.replace(
-          new RegExp(
-            match,
-            `${caseSensitive ? '' : 'i'}${matchAll ? 'g' : ''}`,
-          ),
-          replace,
-        );
-      }
-
-      return fileName.replace(match, replace);
+      return fileName.replace(
+        new RegExp(
+          useRegExp ? match : escapeRegExp(match),
+          `${caseSensitive ? '' : 'i'}${matchAll ? 'g' : ''}`,
+        ),
+        replace,
+      );
     }
 
     case RuleType.Delete: {
