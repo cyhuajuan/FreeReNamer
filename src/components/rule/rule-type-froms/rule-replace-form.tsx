@@ -1,7 +1,6 @@
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,37 +14,39 @@ export const RuleReplaceForm: FC = () => {
   const form = useFormContext<Rule>();
 
   return (
-    <div>
-      <FormField
-        control={form.control}
-        name="info.match"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>查找</FormLabel>
-            <FormControl>
-              <Input {...field} autoComplete="off" />
-            </FormControl>
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="info.replace"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>替换</FormLabel>
-            <FormControl>
-              <Input {...field} autoComplete="off" />
-            </FormControl>
-          </FormItem>
-        )}
-      />
-      <div>
+    <div className="flex flex-col gap-y-4">
+      <div className="flex flex-col gap-y-2">
+        <FormField
+          control={form.control}
+          name="info.match"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>查找</FormLabel>
+              <FormControl>
+                <Input {...field} autoComplete="off" />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="info.replace"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>替换</FormLabel>
+              <FormControl>
+                <Input {...field} autoComplete="off" />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      </div>
+      <div className="flex flex-wrap gap-4">
         <FormField
           control={form.control}
           name="info.useRegExp"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex items-center space-x-2 space-y-0">
               <FormControl>
                 <Checkbox
                   checked={field.value}
@@ -60,7 +61,7 @@ export const RuleReplaceForm: FC = () => {
           control={form.control}
           name="info.caseSensitive"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex items-center space-x-2 space-y-0">
               <FormControl>
                 <Checkbox
                   checked={field.value}
@@ -75,7 +76,7 @@ export const RuleReplaceForm: FC = () => {
           control={form.control}
           name="info.matchAll"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex items-center space-x-2 space-y-0">
               <FormControl>
                 <Checkbox
                   checked={field.value}
