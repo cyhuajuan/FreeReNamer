@@ -174,7 +174,7 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
           </Button>
         </div>
         <div className="grid h-8 grid-cols-[25%_100px_1fr_3rem] divide-x divide-neutral-300 rounded-t bg-neutral-200 text-sm">
-          <span className="flex size-full items-center px-2">命名</span>
+          <span className="flex size-full items-center px-2">名称</span>
           <span className="flex size-full items-center justify-center px-2">
             规则
           </span>
