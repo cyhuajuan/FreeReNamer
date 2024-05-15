@@ -16,6 +16,9 @@
       },
       "style": {
         "noNonNullAssertion": "off"
+      },
+      "correctness": {
+        "noUnusedImports": "error"
       }
     }
   },

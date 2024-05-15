@@ -5,7 +5,6 @@ import { useSpring, animated } from '@react-spring/web';
 import { Button } from '@/components/ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addProfile, getProfile, type Profile } from '@/lib/profile';
-import { nanoid } from 'nanoid';
 import { QueryType } from '@/lib/query';
 import { IconLayoutSidebarLeftCollapse } from '@tabler/icons-react';
 import { atomStore, filesAtom } from '@/lib/atoms';

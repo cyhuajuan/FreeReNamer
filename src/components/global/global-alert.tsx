@@ -3,8 +3,6 @@ import { useAtom } from 'jotai';
 import type { FC } from 'react';
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,

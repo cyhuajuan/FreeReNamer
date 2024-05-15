@@ -7,21 +7,13 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '../ui/dialog';
 import { RuleEditPanel } from './rule-edit-panel';
 import { useForm } from 'react-hook-form';
 import { Form } from '../ui/form';
-import {
-  RuleType,
-  getRuleTypeDefaultValue,
-  getRuleTypeDefaultInfo,
-  type Rule,
-} from '@/lib/rule';
-import { nanoid } from 'nanoid';
+import { getRuleTypeDefaultValue, type Rule } from '@/lib/rule';
 import { updateProfile } from '@/lib/profile';
 import { QueryType } from '@/lib/query';
 import { ScrollArea } from '../ui/scroll-area';
