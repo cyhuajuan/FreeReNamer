@@ -87,6 +87,21 @@ export const RuleReplaceForm: FC = () => {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="info.includeExt"
+          render={({ field }) => (
+            <FormItem className="flex items-center space-x-2 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel>包含扩展名</FormLabel>
+            </FormItem>
+          )}
+        />
       </div>
     </div>
   );
