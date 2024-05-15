@@ -1,5 +1,6 @@
 import { atom, createStore } from 'jotai';
 import type { ReactNode } from 'react';
+import { atomFamily } from 'jotai/utils';
 
 export const atomStore = createStore();
 
@@ -27,3 +28,5 @@ export interface GlobalAlertInfo {
 export const globalAlertInfoAtom = atom<GlobalAlertInfo>({
   opened: false,
 });
+
+export const selectedFilesAtom = atom<string[]>([]);
