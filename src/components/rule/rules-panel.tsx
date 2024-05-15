@@ -76,6 +76,40 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
     },
   });
 
+  const { mutate: updateRuleChecked } = useMutation({
+    mutationFn: async ({
+      ruleId,
+      checked,
+    }: { ruleId: string; checked: boolean }) => {
+      if (!profile) {
+        return;
+      }
+
+      return updateProfile(profileId, {
+        ...profile,
+        rules: profile.rules.map((rule) => {
+          if (rule.id === ruleId) {
+            return {
+              ...rule,
+              enabled: checked,
+            };
+          }
+
+          return rule;
+        }),
+      });
+    },
+
+    onSuccess: async () => {
+      queryClient.invalidateQueries({
+        queryKey: [QueryType.Profile, { id: profileId }],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryType.FileItemInfo, { profileId }],
+      });
+    },
+  });
+
   const form = useForm<Rule>({
     defaultValues: getRuleTypeDefaultValue(),
   });
@@ -104,12 +138,13 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
             添加规则
           </Button>
         </div>
-        <div className="grid h-8 grid-cols-[25%_100px_1fr] divide-x divide-neutral-300 rounded-t bg-neutral-200 text-sm">
+        <div className="grid h-8 grid-cols-[25%_100px_1fr_3rem] divide-x divide-neutral-300 rounded-t bg-neutral-200 text-sm">
           <span className="flex size-full items-center px-2">命名</span>
           <span className="flex size-full items-center justify-center px-2">
             规则
           </span>
           <span className="flex size-full items-center px-2">说明</span>
+          <div />
         </div>
         <ScrollArea className="h-[calc(100%-5rem)] w-full rounded-b border border-t-0">
           <div className="w-full divide-y">
@@ -119,6 +154,9 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
                   key={rule.id}
                   rule={rule}
                   onDel={() => deleteRule(rule.id)}
+                  onSwitch={(checked) =>
+                    updateRuleChecked({ ruleId: rule.id, checked })
+                  }
                 />
               );
             })}
@@ -134,6 +172,7 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="flex h-[70vh] w-full flex-col gap-y-4"
+              autoComplete="off"
             >
               <div className="w-full flex-1">
                 <RuleAddPanel />

@@ -14,7 +14,10 @@ export const fileItemInfoQueryOptions = (
     queryFn: async () => {
       const profile = await getProfile(profileId);
       const fileInfo = await getFileInfo(file);
-      const result = await execRules(profile?.rules ?? [], { fileInfo, index });
+      const result = await execRules(
+        profile?.rules?.filter((rule) => rule.enabled) ?? [],
+        { fileInfo, index },
+      );
       const preview = result === fileInfo.fullName ? null : result;
 
       return {

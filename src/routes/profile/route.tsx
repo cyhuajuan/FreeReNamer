@@ -52,10 +52,13 @@ function Component() {
         const file = files[i];
         const fileInfo = await getFileInfo(file);
 
-        const output = await execRules(profile!.rules, {
-          fileInfo,
-          index: i,
-        });
+        const output = await execRules(
+          profile?.rules?.filter((rule) => rule.enabled) ?? [],
+          {
+            fileInfo,
+            index: i,
+          },
+        );
 
         if (output === fileInfo.fullName) {
           continue;
