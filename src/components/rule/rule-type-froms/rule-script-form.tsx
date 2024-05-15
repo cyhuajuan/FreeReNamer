@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import './rule-script-form-worker';
 import classes from './rule-script-form.module.css';
 
-export const RuleScriptForm: FC = () => {
+const RuleScriptForm: FC = () => {
   const form = useFormContext<Rule>();
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | undefined>();
   const monacoEl = useRef<HTMLDivElement>(null);
@@ -44,3 +44,5 @@ export const RuleScriptForm: FC = () => {
     </div>
   );
 };
+
+export default RuleScriptForm;
