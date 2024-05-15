@@ -10,24 +10,32 @@ import { useFormContext } from 'react-hook-form';
 import { FormControl, FormField, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
 
-export const RuleAddPanel: FC = () => {
+export interface RuleEditPanelProps {
+  allowChangeType?: boolean;
+}
+
+export const RuleEditPanel: FC<RuleEditPanelProps> = ({
+  allowChangeType = true,
+}) => {
   const form = useFormContext<Rule>();
   const typeValue = form.watch('type');
 
   return (
     <div className="flex size-full h-full gap-x-4">
-      <div className="flex w-28 shrink-0 flex-col gap-y-1">
-        {RULE_TYPES.map((ruleType) => (
-          <div
-            key={ruleType}
-            onClick={() => form.reset(getRuleTypeDefaultValue(ruleType))}
-            data-active={typeValue === ruleType || null}
-            className="flex h-8 w-full cursor-default items-center justify-center rounded text-sm transition-colors data-[active]:bg-primary hover:bg-accent data-[active]:text-primary-foreground hover:text-accent-foreground"
-          >
-            {RULE_TYPE_LABELS[ruleType]}
-          </div>
-        ))}
-      </div>
+      {allowChangeType && (
+        <div className="flex w-28 shrink-0 flex-col gap-y-1">
+          {RULE_TYPES.map((ruleType) => (
+            <div
+              key={ruleType}
+              onClick={() => form.reset(getRuleTypeDefaultValue(ruleType))}
+              data-active={typeValue === ruleType || null}
+              className="flex h-8 w-full cursor-default items-center justify-center rounded text-sm transition-colors data-[active]:bg-primary hover:bg-accent data-[active]:text-primary-foreground hover:text-accent-foreground"
+            >
+              {RULE_TYPE_LABELS[ruleType]}
+            </div>
+          ))}
+        </div>
+      )}
       <div className="grid h-full flex-1 grid-rows-[max-content_1fr] gap-y-4">
         <fieldset className="size-full rounded border">
           <legend className="ml-3 px-1 font-bold text-sm">规则名称</legend>

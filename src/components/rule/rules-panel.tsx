@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '../ui/dialog';
-import { RuleAddPanel } from './rule-add-panel';
+import { RuleEditPanel } from './rule-edit-panel';
 import { useForm } from 'react-hook-form';
 import { Form } from '../ui/form';
 import {
@@ -25,6 +25,7 @@ import { nanoid } from 'nanoid';
 import { updateProfile } from '@/lib/profile';
 import { QueryType } from '@/lib/query';
 import { ScrollArea } from '../ui/scroll-area';
+import { RuleEditDialog } from './rule-edit-dialog';
 
 export interface RulesPanelProps {
   profileId: string;
@@ -34,6 +35,8 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
   const queryClient = useQueryClient();
   const { data: profile } = useQuery(profileQueryOptions(profileId));
   const [addRuleDialogOpened, setAddRuleDialogOpened] = useState(false);
+  const [targetEditRule, setTargetEditRule] = useState<Rule | undefined>();
+
   const { mutate: addRule } = useMutation({
     mutationFn: async (rule: Rule) => {
       if (!profile) {
@@ -110,6 +113,36 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
     },
   });
 
+  const { mutate: updateRule } = useMutation({
+    mutationFn: async (rule: Rule) => {
+      if (!profile) {
+        return;
+      }
+
+      return updateProfile(profileId, {
+        ...profile,
+        rules: profile.rules.map((r) => {
+          if (rule.id === r.id) {
+            return {
+              ...r,
+              ...rule,
+            };
+          }
+
+          return r;
+        }),
+      });
+    },
+    onSuccess: async () => {
+      queryClient.invalidateQueries({
+        queryKey: [QueryType.Profile, { id: profileId }],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryType.FileItemInfo, { profileId }],
+      });
+    },
+  });
+
   const form = useForm<Rule>({
     defaultValues: getRuleTypeDefaultValue(),
   });
@@ -122,6 +155,16 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
     addRule(values);
 
     setAddRuleDialogOpened(false);
+  }
+
+  function onUpdateRule(values: Rule) {
+    updateRule(values);
+
+    setTargetEditRule(undefined);
+  }
+
+  function onCloseRuleEditDialog() {
+    setTargetEditRule(undefined);
   }
 
   useEffect(() => {
@@ -157,6 +200,7 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
                   onSwitch={(checked) =>
                     updateRuleChecked({ ruleId: rule.id, checked })
                   }
+                  onEdit={() => setTargetEditRule(rule)}
                 />
               );
             })}
@@ -175,7 +219,7 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
               autoComplete="off"
             >
               <div className="w-full flex-1">
-                <RuleAddPanel />
+                <RuleEditPanel />
               </div>
               <div className="flex w-full shrink-0 items-end justify-end gap-x-2">
                 <DialogClose asChild>
@@ -187,6 +231,11 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
           </Form>
         </DialogContent>
       </Dialog>
+      <RuleEditDialog
+        rule={targetEditRule}
+        onSubmit={onUpdateRule}
+        onOpenedChange={onCloseRuleEditDialog}
+      />
     </>
   );
 };

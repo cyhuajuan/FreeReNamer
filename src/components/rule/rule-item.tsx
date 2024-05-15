@@ -12,9 +12,15 @@ export interface RuleItemProps {
   rule: Rule;
   onDel?: () => void;
   onSwitch?: (checked: boolean) => void;
+  onEdit?: () => void;
 }
 
-export const RuleItem: FC<RuleItemProps> = ({ rule, onDel, onSwitch }) => {
+export const RuleItem: FC<RuleItemProps> = ({
+  rule,
+  onDel,
+  onSwitch,
+  onEdit,
+}) => {
   const description = useMemo(() => {
     return getRuleDescription(rule);
   }, [rule]);
@@ -42,6 +48,7 @@ export const RuleItem: FC<RuleItemProps> = ({ rule, onDel, onSwitch }) => {
         </div>
       </ContextMenuTrigger>
       <ContextMenuContent>
+        <ContextMenuItem onClick={onEdit}>编辑</ContextMenuItem>
         <ContextMenuItem onClick={handleDel}>删除</ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
