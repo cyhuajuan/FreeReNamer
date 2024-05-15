@@ -24,11 +24,11 @@ export const RuleItem: FC<RuleItemProps> = ({ rule, onDel }) => {
   return (
     <ContextMenu>
       <ContextMenuTrigger asChild>
-        <div className="grid min-h-8 w-full grid-cols-[30%_10%_60%] divide-x break-all text-sm hover:bg-neutral-100">
+        <div className="grid min-h-8 w-full grid-cols-[25%_100px_1fr] divide-x break-all text-sm hover:bg-neutral-100">
           <span className="flex size-full items-center px-2 py-1">
             <span>{rule.name}</span>
           </span>
-          <span className="flex size-full items-center px-2 py-1">
+          <span className="flex size-full items-center justify-center px-2 py-1">
             {RULE_TYPE_LABELS[rule.type]}
           </span>
           <span className="flex size-full items-center px-2 py-1">
