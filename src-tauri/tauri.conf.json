@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "free-renamer",
+    "productName": "Free ReNamer",
     "version": "0.2.0"
   },
   "tauri": {
@@ -28,7 +28,7 @@
     },
     "windows": [
       {
-        "title": "free-renamer",
+        "title": "Free ReNamer",
         "width": 800,
         "height": 600
       }
