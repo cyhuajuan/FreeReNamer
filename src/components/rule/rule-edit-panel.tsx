@@ -58,8 +58,10 @@ export const RuleEditPanel: FC<RuleEditPanelProps> = ({
         </fieldset>
         <fieldset className="size-full overflow-hidden rounded border">
           <legend className="ml-3 px-1 font-bold text-sm">规则配置</legend>
-          <ScrollArea className="size-full p-4 pt-2">
-            <RuleFormRender type={typeValue} />
+          <ScrollArea className="size-full">
+            <div className="p-4 pt-2">
+              <RuleFormRender type={typeValue} />
+            </div>
           </ScrollArea>
         </fieldset>
       </div>
