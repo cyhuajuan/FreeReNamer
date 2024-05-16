@@ -200,19 +200,20 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
         </ScrollArea>
       </div>
       <Dialog open={addRuleDialogOpened} onOpenChange={setAddRuleDialogOpened}>
-        <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
+        <DialogContent
+          onPointerDownOutside={(e) => e.preventDefault()}
+          className="grid h-[70vh] w-full grid-cols-1 grid-rows-[max-content_1fr]"
+        >
           <DialogHeader>
             <DialogTitle>添加规则</DialogTitle>
           </DialogHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="flex h-[70vh] w-full flex-col gap-y-4"
+              className="grid size-full grid-rows-[1fr_max-content] gap-y-4 overflow-hidden"
               autoComplete="off"
             >
-              <div className="w-full flex-1">
-                <RuleEditPanel />
-              </div>
+              <RuleEditPanel />
               <div className="flex w-full shrink-0 items-end justify-end gap-x-2">
                 <DialogClose asChild>
                   <Button variant="ghost">取消</Button>
