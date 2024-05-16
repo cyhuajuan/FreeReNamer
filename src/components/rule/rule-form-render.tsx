@@ -3,6 +3,7 @@ import { Suspense, lazy, type FC } from 'react';
 import { RuleReplaceForm } from './rule-type-froms/rule-replace-form';
 import { RuleDeleteForm } from './rule-type-froms/rule-delete-form';
 import { IconLoader2 } from '@tabler/icons-react';
+import { RuleFormatForm } from './rule-type-froms/rule-format-form';
 
 const RuleScriptForm = lazy(() => import('./rule-type-froms/rule-script-form'));
 
@@ -17,6 +18,9 @@ export const RuleFormRender: FC<RuleFormRenderProps> = ({ type }) => {
 
     case RuleType.Delete:
       return <RuleDeleteForm />;
+
+    case RuleType.Format:
+      return <RuleFormatForm />;
 
     case RuleType.Script:
       return (
