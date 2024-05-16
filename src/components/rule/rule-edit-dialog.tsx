@@ -33,13 +33,11 @@ export const RuleEditDialogContent: FC<RuleEditDialogContentProps> = ({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex h-[70vh] w-full flex-col gap-y-4"
+          className="grid size-full grid-rows-[1fr_max-content] gap-y-4 overflow-hidden"
           autoComplete="off"
         >
-          <div className="w-full flex-1">
-            <RuleEditPanel allowChangeType={false} />
-          </div>
-          <div className="flex w-full shrink-0 items-end justify-end gap-x-2">
+          <RuleEditPanel allowChangeType={false} />
+          <div className="flex w-full items-end justify-end gap-x-2">
             <DialogClose asChild>
               <Button variant="ghost">取消</Button>
             </DialogClose>
@@ -66,7 +64,7 @@ export const RuleEditDialog: FC<RuleEditDialogProps> = ({
 
   return (
     <Dialog open={opened} onOpenChange={onOpenedChange}>
-      <DialogContent>
+      <DialogContent className="grid h-[70vh] w-full grid-cols-1 grid-rows-[max-content_1fr]">
         {rule && <RuleEditDialogContent rule={rule} onSubmit={onSubmit} />}
       </DialogContent>
     </Dialog>

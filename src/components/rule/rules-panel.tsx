@@ -214,7 +214,7 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
               autoComplete="off"
             >
               <RuleEditPanel />
-              <div className="flex w-full shrink-0 items-end justify-end gap-x-2">
+              <div className="flex w-full items-end justify-end gap-x-2">
                 <DialogClose asChild>
                   <Button variant="ghost">取消</Button>
                 </DialogClose>
