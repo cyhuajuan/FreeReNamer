@@ -5,8 +5,10 @@ import {
   kebabCase,
   lowerCase,
   lowerFirst,
+  memoize,
   snakeCase,
   startCase,
+  template,
   toLower,
   toUpper,
   upperCase,
@@ -18,6 +20,7 @@ export enum RuleType {
   Replace = 'replace',
   Delete = 'delete',
   Format = 'format',
+  Template = 'template',
   Script = 'script',
 }
 
@@ -74,11 +77,16 @@ export interface RuleScriptInfo extends RuleCommonInfo {
   script: string;
 }
 
+export interface RuleTemplateInfo extends RuleCommonInfo {
+  template: string;
+}
+
 export type RuleInfo = {
   [RuleType.Replace]: RuleReplaceInfo;
   [RuleType.Delete]: RuleDeleteInfo;
   [RuleType.Format]: RuleFormatInfo;
   [RuleType.Script]: RuleScriptInfo;
+  [RuleType.Template]: RuleTemplateInfo;
 };
 
 export interface RuleBase {
@@ -107,7 +115,17 @@ export interface RuleScript extends RuleBase {
   info: RuleScriptInfo;
 }
 
-export type Rule = RuleReplace | RuleDelete | RuleFormat | RuleScript;
+export interface RuleTemplate extends RuleBase {
+  type: RuleType.Template;
+  info: RuleTemplateInfo;
+}
+
+export type Rule =
+  | RuleReplace
+  | RuleDelete
+  | RuleFormat
+  | RuleScript
+  | RuleTemplate;
 
 export const RULE_TYPES = Object.values(RuleType);
 
@@ -116,6 +134,7 @@ export const RULE_TYPE_LABELS = {
   [RuleType.Delete]: '删除',
   [RuleType.Format]: '格式化',
   [RuleType.Script]: '脚本',
+  [RuleType.Template]: '模板',
 };
 
 export function getRuleTypeDefaultInfo<T extends RuleType>(
@@ -153,10 +172,18 @@ export function getRuleTypeDefaultInfo<T extends RuleType>(
           'const { fileInfo, index } = args;\n\n// some code \n\nreturn fileInfo.name;\n',
         includeExt: true,
       } satisfies RuleScriptInfo as RuleInfo[T];
+
+    case RuleType.Template:
+      return {
+        template: '',
+        includeExt: false,
+      } satisfies RuleTemplateInfo as RuleInfo[T];
   }
 
   throw new Error('Unknown rule type');
 }
+
+export const memoTemplate = memoize((content: string) => template(content));
 
 export interface ExecRuleArgs {
   fileInfo: FileInfo;
@@ -249,6 +276,10 @@ export async function _execRule(
     case RuleType.Script: {
       return new Function('args', rule.info.script)(args);
     }
+
+    case RuleType.Template: {
+      return memoTemplate(rule.info.template)(args);
+    }
   }
 }
 
@@ -334,5 +365,8 @@ export function getRuleDescription(rule: Rule): string {
 
     case RuleType.Script:
       return '自定义脚本';
+
+    case RuleType.Template:
+      return `转为 ${rule.info.template}`;
   }
 }
