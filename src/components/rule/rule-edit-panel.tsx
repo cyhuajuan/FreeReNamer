@@ -11,6 +11,7 @@ import { useFormContext } from 'react-hook-form';
 import { FormControl, FormField, FormItem } from '../ui/form';
 import { Input } from '../ui/input';
 import { ScrollArea } from '../ui/scroll-area';
+import { cn } from '@/lib/utils';
 
 export interface RuleEditPanelProps {
   allowChangeType?: boolean;
@@ -57,7 +58,12 @@ export const RuleEditPanel: FC<RuleEditPanelProps> = ({
             />
           </div>
         </fieldset>
-        <fieldset className="size-full overflow-hidden rounded border">
+        <fieldset
+          className={cn(
+            'size-full rounded border',
+            typeValue !== RuleType.Script && 'overflow-hidden',
+          )}
+        >
           <legend className="ml-3 px-1 font-bold text-sm">规则配置</legend>
           {typeValue === RuleType.Script ? (
             <div className="size-full p-4 pt-2">
