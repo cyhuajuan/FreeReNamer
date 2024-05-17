@@ -4,6 +4,7 @@ import { RuleReplaceForm } from './rule-type-froms/rule-replace-form';
 import { RuleDeleteForm } from './rule-type-froms/rule-delete-form';
 import { IconLoader2 } from '@tabler/icons-react';
 import { RuleFormatForm } from './rule-type-froms/rule-format-form';
+import { RuleTemplateForm } from './rule-type-froms/rule-template-form';
 
 const RuleScriptForm = lazy(() => import('./rule-type-froms/rule-script-form'));
 
@@ -35,6 +36,9 @@ export const RuleFormRender: FC<RuleFormRenderProps> = ({ type }) => {
           <RuleScriptForm />
         </Suspense>
       );
+
+    case RuleType.Template:
+      return <RuleTemplateForm />;
 
     default:
       return null;
