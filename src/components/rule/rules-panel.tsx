@@ -13,7 +13,11 @@ import {
 import { RuleEditPanel } from './rule-edit-panel';
 import { useForm } from 'react-hook-form';
 import { Form } from '../ui/form';
-import { getRuleTypeDefaultValue, type Rule } from '@/lib/rule';
+import {
+  getRuleTypeDefaultValue,
+  type Rule,
+  RULE_REPLACE_TYPE,
+} from '@/lib/rule';
 import { updateProfile } from '@/lib/profile';
 import { QueryType } from '@/lib/query';
 import { ScrollArea } from '../ui/scroll-area';
@@ -136,7 +140,7 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
   });
 
   const form = useForm<Rule>({
-    defaultValues: getRuleTypeDefaultValue(),
+    defaultValues: getRuleTypeDefaultValue(RULE_REPLACE_TYPE),
   });
 
   function handleAddRule() {
@@ -161,7 +165,7 @@ export const RulesPanel: FC<RulesPanelProps> = ({ profileId }) => {
 
   useEffect(() => {
     if (!addRuleDialogOpened) {
-      form.reset(getRuleTypeDefaultValue());
+      form.reset(getRuleTypeDefaultValue(RULE_REPLACE_TYPE));
     }
   }, [addRuleDialogOpened, form.reset]);
 

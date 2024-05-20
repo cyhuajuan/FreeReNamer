@@ -1,4 +1,4 @@
-import { RULE_TYPE_LABELS, getRuleDescription, type Rule } from '@/lib/rule';
+import { getRuleDefine, type Rule } from '@/lib/rule';
 import { useMemo, type FC } from 'react';
 import {
   ContextMenu,
@@ -21,9 +21,13 @@ export const RuleItem: FC<RuleItemProps> = ({
   onSwitch,
   onEdit,
 }) => {
+  const label = useMemo(() => {
+    return getRuleDefine(rule.type).label;
+  }, [rule.type]);
+
   const description = useMemo(() => {
-    return getRuleDescription(rule);
-  }, [rule]);
+    return getRuleDefine(rule.type).getDescription(rule.info);
+  }, [rule.type, rule.info]);
 
   function handleDel() {
     onDel?.();
@@ -37,7 +41,7 @@ export const RuleItem: FC<RuleItemProps> = ({
             <span>{rule.name}</span>
           </span>
           <span className="flex size-full items-center justify-center px-2 py-1">
-            {RULE_TYPE_LABELS[rule.type]}
+            {label}
           </span>
           <span className="flex size-full items-center px-2 py-1">
             {description}
