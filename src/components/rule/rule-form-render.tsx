@@ -7,10 +7,12 @@ import { RuleTemplateForm } from './rule-type-froms/rule-template-form';
 import {
   RULE_DELETE_TYPE,
   RULE_FORMAT_TYPE,
+  RULE_INSERT_TYPE,
   RULE_REPLACE_TYPE,
   RULE_SCRIPT_TYPE,
   RULE_TEMPLATE_TYPE,
 } from '@/lib/rules';
+import { RuleInsertForm } from './rule-type-froms/rule-insert-form';
 
 const RuleScriptForm = lazy(() => import('./rule-type-froms/rule-script-form'));
 
@@ -45,6 +47,9 @@ export const RuleFormRender: FC<RuleFormRenderProps> = ({ type }) => {
 
     case RULE_TEMPLATE_TYPE:
       return <RuleTemplateForm />;
+
+    case RULE_INSERT_TYPE:
+      return <RuleInsertForm />;
 
     default:
       return null;
