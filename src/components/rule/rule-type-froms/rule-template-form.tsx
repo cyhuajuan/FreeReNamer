@@ -6,11 +6,13 @@ import {
   FormControl,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import type { RULE_TEMPLATE_TYPE, Rule, RuleTemplateInfo } from '@/lib/rules';
 import type { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 export const RuleTemplateForm: FC = () => {
-  const form = useFormContext();
+  const form =
+    useFormContext<Rule<typeof RULE_TEMPLATE_TYPE, RuleTemplateInfo>>();
 
   return (
     <div className="flex flex-col gap-y-4">

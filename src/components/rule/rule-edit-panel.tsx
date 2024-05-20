@@ -1,11 +1,10 @@
 import {
-  RULE_TYPES,
-  RULE_TYPE_LABELS,
-  RuleType,
+  RULE_SCRIPT_TYPE,
+  getRuleDefines,
   getRuleTypeDefaultValue,
   type Rule,
 } from '@/lib/rule';
-import type { FC } from 'react';
+import { useMemo, type FC } from 'react';
 import { RuleFormRender } from './rule-form-render';
 import { useFormContext } from 'react-hook-form';
 import { FormControl, FormField, FormItem } from '../ui/form';
@@ -22,20 +21,25 @@ export const RuleEditPanel: FC<RuleEditPanelProps> = ({
 }) => {
   const form = useFormContext<Rule>();
   const typeValue = form.watch('type');
+  const ruleDefines = useMemo(() => {
+    return getRuleDefines();
+  }, []);
 
   return (
     <div className="flex size-full h-full gap-x-4 overflow-hidden">
       {allowChangeType && (
         <ScrollArea className="h-full w-28 shrink-0">
           <div className="flex w-full flex-col gap-y-1">
-            {RULE_TYPES.map((ruleType) => (
+            {ruleDefines.map((ruleDefine) => (
               <div
-                key={ruleType}
-                onClick={() => form.reset(getRuleTypeDefaultValue(ruleType))}
-                data-active={typeValue === ruleType || null}
+                key={ruleDefine.type}
+                onClick={() =>
+                  form.reset(getRuleTypeDefaultValue(ruleDefine.type))
+                }
+                data-active={typeValue === ruleDefine.type || null}
                 className="flex h-8 w-full cursor-default items-center justify-center rounded text-sm transition-colors data-[active]:bg-primary hover:bg-accent data-[active]:text-primary-foreground hover:text-accent-foreground"
               >
-                {RULE_TYPE_LABELS[ruleType]}
+                {ruleDefine.label}
               </div>
             ))}
           </div>
@@ -61,11 +65,11 @@ export const RuleEditPanel: FC<RuleEditPanelProps> = ({
         <fieldset
           className={cn(
             'size-full rounded border',
-            typeValue !== RuleType.Script && 'overflow-hidden',
+            typeValue !== RULE_SCRIPT_TYPE && 'overflow-hidden',
           )}
         >
           <legend className="ml-3 px-1 font-bold text-sm">规则配置</legend>
-          {typeValue === RuleType.Script ? (
+          {typeValue === RULE_SCRIPT_TYPE ? (
             <div className="size-full p-4 pt-2">
               <RuleFormRender type={typeValue} />
             </div>

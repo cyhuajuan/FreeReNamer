@@ -1,29 +1,35 @@
-import { RuleType } from '@/lib/rule';
 import { Suspense, lazy, type FC } from 'react';
 import { RuleReplaceForm } from './rule-type-froms/rule-replace-form';
 import { RuleDeleteForm } from './rule-type-froms/rule-delete-form';
 import { IconLoader2 } from '@tabler/icons-react';
 import { RuleFormatForm } from './rule-type-froms/rule-format-form';
 import { RuleTemplateForm } from './rule-type-froms/rule-template-form';
+import {
+  RULE_DELETE_TYPE,
+  RULE_FORMAT_TYPE,
+  RULE_REPLACE_TYPE,
+  RULE_SCRIPT_TYPE,
+  RULE_TEMPLATE_TYPE,
+} from '@/lib/rules';
 
 const RuleScriptForm = lazy(() => import('./rule-type-froms/rule-script-form'));
 
 export interface RuleFormRenderProps {
-  type: RuleType;
+  type: string;
 }
 
 export const RuleFormRender: FC<RuleFormRenderProps> = ({ type }) => {
   switch (type) {
-    case RuleType.Replace:
+    case RULE_REPLACE_TYPE:
       return <RuleReplaceForm />;
 
-    case RuleType.Delete:
+    case RULE_DELETE_TYPE:
       return <RuleDeleteForm />;
 
-    case RuleType.Format:
+    case RULE_FORMAT_TYPE:
       return <RuleFormatForm />;
 
-    case RuleType.Script:
+    case RULE_SCRIPT_TYPE:
       return (
         <Suspense
           fallback={
@@ -37,7 +43,7 @@ export const RuleFormRender: FC<RuleFormRenderProps> = ({ type }) => {
         </Suspense>
       );
 
-    case RuleType.Template:
+    case RULE_TEMPLATE_TYPE:
       return <RuleTemplateForm />;
 
     default:

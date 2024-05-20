@@ -6,15 +6,17 @@ import {
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
+  type RULE_FORMAT_TYPE,
   RULE_FORMAT_TYPES,
   RULE_FORMAT_TYPE_LABELS,
   type Rule,
+  type RuleFormatInfo,
 } from '@/lib/rule';
 import type { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 export const RuleFormatForm: FC = () => {
-  const form = useFormContext<Rule>();
+  const form = useFormContext<Rule<typeof RULE_FORMAT_TYPE, RuleFormatInfo>>();
 
   return (
     <div>
