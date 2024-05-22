@@ -59,6 +59,10 @@ function Component() {
           },
         );
 
+        if (!output) {
+          continue;
+        }
+
         if (output === fileInfo.fullName) {
           continue;
         }

@@ -12,9 +12,11 @@ export interface FileItemProps {
 }
 
 export const FileItem: FC<FileItemProps> = ({ file, profileId, index }) => {
-  const { data: fileItemInfo } = useQuery(
-    fileItemInfoQueryOptions(profileId, file, index),
-  );
+  const {
+    data: fileItemInfo,
+    error,
+    isError,
+  } = useQuery(fileItemInfoQueryOptions(profileId, file, index));
 
   const selectedFiles = useAtomValue(selectedFilesAtom);
   const selected = useMemo(
@@ -30,6 +32,16 @@ export const FileItem: FC<FileItemProps> = ({ file, profileId, index }) => {
 
       return prev.filter((item) => item !== file);
     });
+  }
+
+  if (isError) {
+    return (
+      <div className="grid min-h-8 w-full grid-cols-1 divide-x break-all text-sm hover:bg-neutral-100">
+        <div className="flex items-center justify-center">
+          {error as unknown as string}
+        </div>
+      </div>
+    );
   }
 
   if (!fileItemInfo) {
