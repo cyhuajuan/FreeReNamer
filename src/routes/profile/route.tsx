@@ -9,8 +9,6 @@ import { QueryType } from '@/lib/query';
 import { IconLayoutSidebarLeftCollapse } from '@tabler/icons-react';
 import { atomStore, filesAtom } from '@/lib/atoms';
 import { execRules } from '@/lib/rule';
-import { dirname, join } from '@tauri-apps/api/path';
-import { invoke } from '@tauri-apps/api';
 import { getFileInfo } from '@/lib/file';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { showConfirm } from '@/lib/ui';
@@ -49,7 +47,9 @@ function Component() {
 
       for (let i = 0, len = files.length; i < len; i++) {
         const file = files[i];
-        const fileInfo = await getFileInfo(file);
+        const fileInfo = await getFileInfo(
+          typeof file === 'string' ? file : file.name,
+        );
 
         const output = await execRules(
           profile?.rules?.filter((rule) => rule.enabled) ?? [],
@@ -67,13 +67,21 @@ function Component() {
           continue;
         }
 
-        const dir = await dirname(file);
-        const outputFile = await join(dir, output);
+        if (__PLATFORM__ === __PLATFORM_TAURI__) {
+          const { dirname, join } = await import('@tauri-apps/api/path');
+          const { invoke } = await import('@tauri-apps/api');
+          const dir = await dirname(file as string);
+          const outputFile = await join(dir, output);
 
-        await invoke('rename', {
-          old: file,
-          new: outputFile,
-        });
+          await invoke('rename', {
+            old: file,
+            new: outputFile,
+          });
+        }
+
+        if (__PLATFORM__ === __PLATFORM_WEB__) {
+          await (file as FileSystemFileHandle).move(output);
+        }
       }
 
       atomStore.set(filesAtom, []);

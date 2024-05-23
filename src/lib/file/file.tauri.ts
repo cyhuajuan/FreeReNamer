@@ -1,10 +1,5 @@
 import { extname } from '@tauri-apps/api/path';
-
-export interface FileInfo {
-  name: string;
-  ext: string;
-  fullName: string;
-}
+import type { FileInfo } from './type';
 
 export async function getExt(file: string): Promise<string> {
   try {
@@ -16,9 +11,9 @@ export async function getExt(file: string): Promise<string> {
 
 export async function getBasename(file: string): Promise<string> {
   try {
-    const module = await import('@tauri-apps/api');
+    const { invoke } = await import('@tauri-apps/api');
 
-    return await module.invoke('basename', { path: file });
+    return await invoke('basename', { path: file });
   } catch (err) {
     return '';
   }

@@ -1,7 +1,7 @@
 {
   "build": {
-    "beforeDevCommand": "pnpm dev",
-    "beforeBuildCommand": "pnpm build",
+    "beforeDevCommand": "pnpm dev-in-tauri",
+    "beforeBuildCommand": "pnpm build-in-tauri",
     "devPath": "http://localhost:1420",
     "distDir": "../dist"
   },

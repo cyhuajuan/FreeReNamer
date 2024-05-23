@@ -1,9 +1,14 @@
-import { atom, createStore } from 'jotai';
+import { atom, createStore, type PrimitiveAtom } from 'jotai';
 import type { ReactNode } from 'react';
 
 export const atomStore = createStore();
 
-export const filesAtom = atom<string[]>([]);
+export const filesAtom = atom<string[] | FileSystemFileHandle[]>([]);
+
+export type FilesAtomTauri = PrimitiveAtom<string[]> &
+  WithInitialValue<string[]>;
+export type FilesAtomWeb = PrimitiveAtom<FileSystemFileHandle[]> &
+  WithInitialValue<FileSystemFileHandle[]>;
 
 export interface GlobalDialogInfo {
   opened: boolean;
