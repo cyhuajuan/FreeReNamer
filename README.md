@@ -15,9 +15,13 @@
 
 ## 
 
-## 预览
+## 桌面版预览
 
 ![image](static/preview.png)
+
+## 网页版预览
+
+![image](static/web-preview.png)
 
 ## 网页端和桌面端的一些区别
 
