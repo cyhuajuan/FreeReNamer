@@ -8,7 +8,7 @@
       FreeReNamer
     </h1>
     <h4>功能强大又易用的文件批量重命名软件</h4>
-    <p>网页版在线体验：<a href="https://renamer.cyhuajuan.online" target="_blank">https://renamer.cyhuajuan.site</a></p>
+    <p>网页版在线体验：<a href="https://renamer.cyhuajuan.online" target="_blank">https://renamer.cyhuajuan.online</a></p>
     <p>客户端下载：<a href="https://github.com/cyhuajuan/FreeReNamer/releases">release</a></p>
   </p>
 </div>
