@@ -6,12 +6,12 @@ import { Button } from '@/components/ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addProfile, getProfile, type Profile } from '@/lib/profile';
 import { QueryType } from '@/lib/query';
-import { IconLayoutSidebarLeftCollapse } from '@tabler/icons-react';
+import { IconLayoutSidebarLeftCollapse, IconSettings } from '@tabler/icons-react';
 import { atomStore, filesAtom } from '@/lib/atoms';
 import { execRules } from '@/lib/rule';
 import { getFileInfo } from '@/lib/file';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { showConfirm } from '@/lib/ui';
+import { showConfirm, showSettingsDialog } from '@/lib/ui';
 
 export const Route = createFileRoute('/profile')({
   component: Component,
@@ -137,9 +137,18 @@ function Component() {
               <IconLayoutSidebarLeftCollapse />
             </animated.button>
           </Button>
+          <div className='flex items-center gap-x-2'>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => showSettingsDialog()}
+          >
+            <IconSettings />
+          </Button>
           <Button size="sm" onClick={handleExecClick}>
             执行
           </Button>
+          </div>
         </div>
         <div className="h-[calc(100%-3rem)] w-full">
           <Outlet />

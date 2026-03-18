@@ -56,3 +56,16 @@ export function showConfirm({
     ),
   });
 }
+
+export function showSettingsDialog() {
+  atomStore.set(globalDialogInfoAtom, {
+    opened: true,
+    title: '设置',
+    contentClassName: 'max-w-[500px]',
+    children: (
+      <div className="py-4">
+        <p className="text-muted-foreground">设置界面暂未实现</p>
+      </div>
+    ),
+  });
+}
