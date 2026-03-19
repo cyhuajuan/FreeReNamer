@@ -13,14 +13,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: create release
-        uses: tauri-apps/create-release@v0
+      - name: create draft release
+        uses: softprops/action-gh-release@v2
         with:
-          tagName: v__VERSION__
-          releaseName: 'v__VERSION__'
-          releaseBody: '在assets下选择对应平台的程序'
           draft: true
           prerelease: false
+          body: '在assets下选择对应平台的程序'
+          tag: ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -70,9 +69,24 @@ jobs:
         run: pnpm install
 
       - name: build tauri app
-        uses: tauri-apps/build-tauri-action@v0
-        with:
-          tagName: v__VERSION__
-          args: ${{ matrix.args }}
+        run: pnpm tauri build ${{ matrix.args }}
+
+      - name: upload to release
+        run: |
+          tag="${{ github.ref_name }}"
+
+          # Upload bundle outputs
+          for file in $(find src-tauri/target/release/bundle -type f \( -name "*.exe" -o -name "*.msi" -o -name "*.dmg" -o -name "*.app" -o -name "*.deb" -o -name "*.rpm" -o -name "*.AppImage" \) 2>/dev/null); do
+            echo "Uploading $(basename $file)"
+            gh release upload "$tag" "$file" --clobber
+          done
+
+          # Upload main binary
+          for binary in src-tauri/target/release/free-renamer src-tauri/target/release/free-renamer.exe; do
+            if [ -f "$binary" ]; then
+              echo "Uploading $(basename $binary)"
+              gh release upload "$tag" "$binary" --clobber
+            fi
+          done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
