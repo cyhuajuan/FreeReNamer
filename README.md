@@ -34,5 +34,6 @@
 - 支持拖拽添加文件和文件夹
 - 支持创建多个配置
 - 单个配置内支持多个规则
-- 支持js脚本，内置Monaco Editor。
+- 支持js脚本，内置Monaco Editor
+- 支持AI规则，通过Ollama接口用自然语言生成重命名脚本
 - 跨平台，支持windows,macos,linux
