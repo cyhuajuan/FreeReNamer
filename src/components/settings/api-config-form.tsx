@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { API_CONFIG_TYPES, ApiConfigSchema, getDefaultApiConfig, type ApiConfig } from '@/lib/settings/ai-config';
+import { ApiConfigSchema, getDefaultApiConfig, type ApiConfig } from '@/lib/settings/ai-config';
 
 interface ApiConfigFormProps {
   defaultValues?: Partial<ApiConfig>;
@@ -27,8 +27,6 @@ export function ApiConfigForm({
       ...defaultValues,
     },
   });
-
-  const typeValue = form.watch('type');
 
   return (
     <Form {...form}>
@@ -59,14 +57,12 @@ export function ApiConfigForm({
                   defaultValue={field.value}
                   className="flex space-x-4"
                 >
-                  {API_CONFIG_TYPES.map((type) => (
-                    <div key={type} className="flex items-center space-x-2">
-                      <RadioGroupItem value={type} id={type} />
-                      <Label htmlFor={type} className="font-normal">
-                        {type === 'ollama' ? 'Ollama' : 'OpenAI'}
-                      </Label>
-                    </div>
-                  ))}
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="ollama" id="ollama" />
+                    <Label htmlFor="ollama" className="font-normal">
+                      Ollama
+                    </Label>
+                  </div>
                 </RadioGroup>
               </FormControl>
               <FormMessage />
@@ -96,7 +92,7 @@ export function ApiConfigForm({
               <FormLabel>模型名称</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={typeValue === 'ollama' ? 'llama3.2' : 'gpt-4o-mini'}
+                  placeholder="llama3.2"
                   {...field}
                 />
               </FormControl>
@@ -105,21 +101,6 @@ export function ApiConfigForm({
           )}
         />
 
-        {typeValue === 'openai' && (
-          <FormField
-            control={form.control}
-            name="apiKey"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>API密钥</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="sk-..." {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
 
         <div className="flex justify-end gap-2">
           {onCancel && (
