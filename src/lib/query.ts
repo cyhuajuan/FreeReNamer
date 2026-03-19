@@ -4,4 +4,5 @@ export enum QueryType {
   FileBaseName = 'fileBaseName',
   FileInfo = 'fileInfo',
   FileItemInfo = 'fileItemInfo',
+  AiConfigList = 'aiConfigList',
 }

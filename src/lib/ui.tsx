@@ -6,6 +6,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
+import { SettingsContent } from '@/components/settings/settings-content';
 
 export function showRenameDialog(cb?: (name: string) => void) {
   atomStore.set(globalDialogInfoAtom, {
@@ -61,11 +62,7 @@ export function showSettingsDialog() {
   atomStore.set(globalDialogInfoAtom, {
     opened: true,
     title: '设置',
-    contentClassName: 'max-w-[500px]',
-    children: (
-      <div className="py-4">
-        <p className="text-muted-foreground">设置界面暂未实现</p>
-      </div>
-    ),
+    contentClassName: 'max-w-[600px]',
+    children: <SettingsContent />,
   });
 }
