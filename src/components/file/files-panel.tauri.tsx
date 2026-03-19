@@ -29,7 +29,6 @@ const FilesPanel: FC<FilesPanelProps> = ({ profileId }) => {
 
   async function onAddFile() {
     const openFiles = await open({ multiple: true, directory: false });
-    window.showOpenFilePicker();
 
     if (!Array.isArray(openFiles)) {
       return;
