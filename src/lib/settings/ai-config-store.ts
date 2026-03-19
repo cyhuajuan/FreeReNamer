@@ -6,6 +6,11 @@ export async function getAiConfigList(): Promise<ApiConfig[]> {
   return (await store.get<ApiConfig[]>(QueryType.AiConfigList)) ?? [];
 }
 
+export async function getAiConfig(id: string): Promise<ApiConfig | undefined> {
+  const configs = await getAiConfigList();
+  return configs.find((c) => c.id === id);
+}
+
 export async function setAiConfigList(configs: ApiConfig[]): Promise<void> {
   await store.set(QueryType.AiConfigList, configs);
 }
